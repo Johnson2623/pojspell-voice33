@@ -3344,6 +3344,27 @@ function setBibleBook(bookName) {
   applyFilters();
 }
 
+/* 辨識測驗：停用聲調、特殊符號及清除鍵；離開測驗恢復原本寫作模式的啟用條件。 */
+function syncPojKeyboardForView() {
+  const keyboard = document.getElementById('poj-tone-keyboard');
+  if (!keyboard) return;
+  const disabled = currentView === 'quiz' || flashcardMask !== 'write';
+  keyboard.classList.toggle('poj-keyboard-inactive', disabled);
+  keyboard.querySelectorAll('button').forEach(button => {
+    button.disabled = disabled;
+    button.setAttribute('aria-disabled', String(disabled));
+  });
+  const entry = document.getElementById('poj-keyboard-entry');
+  if (entry && currentView === 'quiz') {
+    entry.disabled = true;
+    entry.setAttribute('aria-disabled', 'true');
+    entry.blur();
+  } else if (entry && currentView === 'card' && flashcardMask === 'write') {
+    entry.disabled = false;
+    entry.setAttribute('aria-disabled', 'false');
+  }
+}
+
 function setViewMode(mode) {
   currentView = mode;
   ['card', 'quiz', 'grid'].forEach(m => {
@@ -3357,6 +3378,7 @@ function setViewMode(mode) {
   isFlipped = false;
   restartAutoTimer();
   renderAll();
+  syncPojKeyboardForView();
 }
 
 function getFilteredDeck() {
@@ -3430,6 +3452,7 @@ function setFlashcardMask(mask) {
   }
   const msg = document.getElementById('fc-write-feedback');
   if (msg) msg.textContent = '';
+  syncPojKeyboardForView();
   renderFlashcard();
 }
 function applyFlashcardMask() {
@@ -3915,6 +3938,7 @@ window.addEventListener('DOMContentLoaded', function() {
     updateBookTabs();
     applyFilters();
     changeSpeed(3);
+    syncPojKeyboardForView();
     pojDiagnostics.started = true;
     pojDiagnostics.lastCheck = '初始化函式已全部執行';
     pojUpdateDiagnostics();
