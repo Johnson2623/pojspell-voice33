@@ -724,6 +724,14 @@
 #view-grid .poj-audio-play {margin:6px 0 2px;font-size:.78rem;}
 @media(max-width:640px){.poj-audio-tools{font-size:.77rem;gap:4px}.poj-audio-tools .mini-btn{padding:6px}.poj-audio-panel{margin:2px 0 5px}}
 
+
+/* 辨識測驗：原辭庫標示位置改為教育部例音播放按鈕 */
+#view-quiz .mini-btns #qz-verse.poj-audio-play {
+ cursor:pointer; min-height:40px; white-space:normal;
+ background:#eaf0f5; color:var(--primary); border:1px solid #dae5ec;
+ font-size:1.148rem; font-weight:700;
+}
+#view-quiz .mini-btns #qz-verse.poj-audio-play:hover {background:#dce9f4;}
 /* 互動閃卡：原辭庫標示位置改為教育部例音播放按鈕 */
 #view-card .fc-meta-row #fc-verse.poj-audio-play {
   cursor:pointer; min-height:40px; white-space:normal;
@@ -1017,7 +1025,7 @@ button:disabled{opacity:.48;cursor:not-allowed}
 <div class="mini-btns">
 <span class="progress-badge" id="qz-status">題庫｜答對：0</span>
 <button class="mini-btn quiz-reshuffle" onclick="resetQuiz()">測驗重洗牌</button>
-<span class="verse-tag" id="qz-verse">名詞 01:01</span>
+<button type="button" class="verse-tag poj-audio-play" id="qz-verse" onclick="playPOJItemAudio(activeDeck[quizIdx], event)">▶ 聆聽教育部例音</button>
 <div class="filter-group">
 <label style="font-size:0.84rem;font-weight:700;">調整速度：</label>
 <select class="select-box speed-select" onchange="changeSpeed(this.value)">
@@ -1034,7 +1042,7 @@ button:disabled{opacity:.48;cursor:not-allowed}
 </div>
 <div class="quiz-box">
 <div class="quiz-target-hanzi" id="qz-hanzi">子</div>
-<div class="poj-audio-panel"><button type="button" class="poj-audio-play" onclick="playPOJItemAudio(activeDeck[quizIdx], event)">▶ 聆聽教育部例音</button></div>
+
 <div class="quiz-options" id="qz-options"></div>
 <div class="quiz-feedback hidden" id="qz-feedback"></div>
 </div>
@@ -3675,7 +3683,7 @@ function renderQuiz() {
 
   document.getElementById('qz-status').textContent =
     `共 ${activeDeck.length} 題｜答對：${quizCorrect}`;
-  document.getElementById('qz-verse').textContent = `${currentBookName} ${item.verse}`;
+  // 辨識測驗標題欄保留教育部例音播放按鈕，換題時不覆蓋按鈕文字。
   document.getElementById('qz-hanzi').textContent = item.hanzi;
 
   const optContainer = document.getElementById('qz-options');
