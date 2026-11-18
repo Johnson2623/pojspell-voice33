@@ -723,6 +723,14 @@
 .poj-audio-panel {display:flex; justify-content:center; margin:4px 0 8px;}
 #view-grid .poj-audio-play {margin:6px 0 2px;font-size:.78rem;}
 @media(max-width:640px){.poj-audio-tools{font-size:.77rem;gap:4px}.poj-audio-tools .mini-btn{padding:6px}.poj-audio-panel{margin:2px 0 5px}}
+
+/* 互動閃卡：原辭庫標示位置改為教育部例音播放按鈕 */
+#view-card .fc-meta-row #fc-verse.poj-audio-play {
+  cursor:pointer; min-height:40px; white-space:normal;
+  background:#eaf0f5; color:var(--primary); border:1px solid #dae5ec;
+  font-size:1.148rem; font-weight:700;
+}
+#view-card .fc-meta-row #fc-verse.poj-audio-play:hover { background:#dce9f4; }
 </style>
 <style>
 /* 獨立副本鍵盤：限定在 poj- 前綴，不覆蓋閃卡的原始 CSS */
@@ -959,7 +967,7 @@ button:disabled{opacity:.48;cursor:not-allowed}
 </div>
 <!-- 互動閃卡：動態經文章節與速度，各佔一半 -->
 <div class="fc-meta-row">
-<span class="verse-tag" id="fc-verse">名詞 01:01</span>
+<button type="button" class="verse-tag poj-audio-play" id="fc-verse" onclick="playPOJItemAudio(activeDeck[cardIdx], event)">▶ 聆聽教育部例音</button>
 <div class="filter-group">
 <label for="fc-speed-select">調整速度：</label>
 <select class="select-box speed-select" id="fc-speed-select" onchange="changeSpeed(this.value)">
@@ -1000,7 +1008,7 @@ button:disabled{opacity:.48;cursor:not-allowed}
 </div>
 </div>
 </div>
-<div class="poj-audio-panel"><button type="button" class="poj-audio-play" id="fc-audio-btn" onclick="playPOJItemAudio(activeDeck[cardIdx], event)">▶ 聆聽教育部例音</button></div>
+
 <div id="fc-write-feedback" class="fc-write-feedback" aria-live="polite"></div>
 <!-- VIEW 2: QUIZ -->
 <div class="hidden" id="view-quiz">
@@ -3486,7 +3494,7 @@ function renderFlashcard() {
   }
 
   // 第三列顯示「聖經出處章節」（隨機顯示）
-  document.getElementById('fc-verse').textContent = `${currentBookName} ${item.verse}`;
+  
 
   const frontWord = document.getElementById('fc-front-word');
   const secondWord = document.getElementById('fc-second-word');
