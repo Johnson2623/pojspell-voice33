@@ -948,14 +948,7 @@ button:disabled{opacity:.48;cursor:not-allowed}
 </div>
 <div class="workspace">
 
-<!-- 音訊已整合；使用者明確點擊 ▶ 才會播放。 -->
-<div class="poj-audio-tools" aria-label="教育部詞條音檔設定">
-  <button type="button" class="mini-btn" onclick="document.getElementById('poj-audio-file-picker').click()">📂 載入音檔</button>
-  <input type="file" id="poj-audio-file-picker" accept="audio/mpeg,audio/mp3,audio/wav,.mp3,.wav" multiple hidden onchange="importPOJAudioFiles(this.files)">
-  <button type="button" class="mini-btn" onclick="document.getElementById('poj-audio-folder-picker').click()">📁 載入音檔資料夾</button>
-  <input type="file" id="poj-audio-folder-picker" webkitdirectory directory multiple hidden onchange="importPOJAudioFiles(this.files)">
-  <span id="poj-audio-status" class="poj-audio-info" role="status" aria-live="polite">已內建教育部詞條音檔；點擊 ▶ 聆聽即可播放。</span>
-</div>
+
 <!-- VIEW 1: FLASHCARD -->
 <div id="view-card">
 <!-- 互動閃卡：三個操作按鈕等寬列 -->
